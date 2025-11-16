@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\Department.cs~RF1fa88a73.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\Enums\" />
   </ItemGroup>
 
