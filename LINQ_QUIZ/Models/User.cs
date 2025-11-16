@@ -59,6 +59,9 @@ namespace LINQ_QUIZ.Models
             decimal? lastSalary = GetCurrentSalary();
             decimal newSalaryAmount = lastSalary != null ? (decimal)(lastSalary + (lastSalary * percentage / 100)) : 0m;
 
+            if (newSalaryAmount > Manager?.GetCurrentSalary())
+                throw new InvalidSalaryException($"Salary {newSalaryAmount:C} cannot be more than Manager's salary");
+
             Month currentMonth = (Month)DateTime.Now.Month;
             SalaryRecord.Add(new SalaryRecord(newSalaryAmount, currentMonth, DateTime.Now.Year));
         }
