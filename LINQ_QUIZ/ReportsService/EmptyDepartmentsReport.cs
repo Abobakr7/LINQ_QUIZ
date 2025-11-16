@@ -13,8 +13,14 @@ namespace LINQ_QUIZ.ReportsService
         public IEnumerable<Department> GenerateEmptyDepartmentReport()
         {
             IEnumerable<User> users = UserSource.GetAllUsers();
-
-            // Implement the logic to get the list of empty departments
+            Department[] depts = new[] { Department.SERVICE_GROUP, Department.IT, Department.HR, Department.OIL_AND_GAS };
+            var nonEmptyDepts = users
+                        .Select(u => u.Department)
+                        .Distinct()
+                        .ToList();
+            var query = depts
+                            .Except(nonEmptyDepts);
+            return query.ToList();
         }
     }
 }

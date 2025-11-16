@@ -10,11 +10,13 @@ namespace LINQ_QUIZ.ReportsService
 {
     internal class HeadOfEachDepartmentReport
     {
-        public IEnumerable<(Department department,User user)> GenerateHeadOfEachDepartmentReport()
+        public IEnumerable<(Department department, User user)> GenerateHeadOfEachDepartmentReport()
         {
             IEnumerable<User> users = UserSource.GetAllUsers();
-            // Implement the logic to get the head of each department
-
+            var query = users
+                            .GroupBy(u => u.Department)
+                            .Select(grp => (grp.Key, grp.Where(u => u.Manager == null).FirstOrDefault()));
+            return query.ToList();
         }
     }
 }

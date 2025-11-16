@@ -11,7 +11,27 @@ namespace LINQ_QUIZ.ReportsService
         public IEnumerable<DepartmentReportResult> GenerateReport()
         {
             var users = DataBase.UserSource.GetAllUsers();
-            // Implement the logic to generate the department report
+            var query = users
+                            .GroupBy(u => u.Department)
+                            .Select(grp => {
+                                int deptId = grp.Key != null ? grp.Key.Id : -1;
+                                string deptName = grp.Key != null ? grp.Key.Name : "No Department";
+                                string headofDepartmentName = grp.Key != null ?
+                                                                grp.Where(u => u.Manager == null).Select(u => u.Name).First() :
+                                                                string.Empty;
+
+                                return new DepartmentReportResult
+                                {
+                                    DepartmentId = deptId,
+                                    DepartmentName = deptName,
+                                    EmployeeCount = grp.Count(),
+                                    HeadOfDepartmentName = headofDepartmentName,
+                                    TotalSalaries = grp.SelectMany(u => u.SalaryRecord).Sum(s => s.Amount),
+                                    MaxSalary = grp.SelectMany(u => u.SalaryRecord).Max(s => s.Amount),
+                                    MinSalary = grp.SelectMany(u => u.SalaryRecord).Min(s => s.Amount)
+                                };
+                            });
+            return query.ToList();
         }
     }
 

@@ -16,7 +16,10 @@ namespace LINQ_QUIZ.ReportsService
         public decimal GenerateTotalSalariesReport()
         {
             IEnumerable<User> users = UserSource.GetAllUsers();
-            // Implement the logic to calculate the total salaries
+            return users
+                        .SelectMany(u => u.SalaryRecord)
+                        .Where(s => (int)s.Month == DateTime.Now.Month) // should add this `s.Year == DateTime.Now.Year` because salary record tracks year too
+                        .Sum(s => s.Amount);
         }
     }
 }

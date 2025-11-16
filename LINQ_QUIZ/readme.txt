@@ -18,3 +18,5 @@ clean code and best practices (10%)
 
 why we implent Departnet in this way?
 why not using Enum? (10%)
+
+To enforce singelton pattern by having only one instance shared across the app
