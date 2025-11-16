@@ -15,3 +15,6 @@ the data accordingly in all code base.(10%)
 5- five reports (50%)
 
 clean code and best practices (10%)
+
+why we implent Departnet in this way?
+why not using Enum? (10%)
